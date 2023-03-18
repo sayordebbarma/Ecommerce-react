@@ -1,7 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { ShopContext } from '../../context/shop-context';
 
 export const Product = (props) => {
     const {id, name, price, image} = props.data;
+    const { addToCart, cartItems } = useContext(ShopContext);
+
+    const cartItemAmount = cartItems[id];
+
   return (
     <div className="product">
         <img src={image} alt="" />
@@ -11,7 +16,9 @@ export const Product = (props) => {
             <p> ₹ { price }</p>
         </div>
 
-        <div className="addToCart">Buy Now</div>
+        <div className="addToCart" onClick={() => addToCart(id)}>
+          Buy Now {cartItemAmount > 0 && <> ({cartItemAmount})</>}
+        </div>
     </div>
   )
 }
